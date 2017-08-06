@@ -4,8 +4,6 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'w3h+2-+@11-g2z6v=l4%31d*ibq6kc6(v(5nds_2n&tv8#n5iq'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
