@@ -1,0 +1,43 @@
+
+#table > div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.schemaTable {
+    align-self: center;
+}
+
+.calcTablesCont {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 20px;
+}
+
+table.schemaTable tr[level='1']>td:first-child {
+    padding-left: 10px;
+}
+
+table.schemaTable tr[level='2'] td:first-child {
+    padding-left: 30px;
+}
+
+table.schemaTable tr[level='3'] td:first-child {
+    padding-left: 50px;
+}
+
+table.schemaTable tr[level='4'] td:first-child {
+    padding-left: 70px;
+}
+
+table.schemaTable tr[level='5'] td:first-child {
+    padding-left: 90px;
+}
+
+table.schemaTable tr.opened {
+    display: table-row;
+}
+
+table.schemaTable tr.closed {
+    display: none;
+}

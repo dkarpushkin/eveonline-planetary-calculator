@@ -1,0 +1,45 @@
+
+#table > div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.typesTable {
+    align-self: center;
+}
+
+.typesTable ul {
+
+}
+
+.typesTable li {
+
+}
+
+.typesTable .closed {
+
+}
+
+.typesTable .opened {
+
+}
+
+table .level0 td:first-child {
+    padding-left: 10px;
+}
+
+table .level1 td:first-child {
+    padding-left: 30px;
+}
+
+table .level2 td:first-child {
+    padding-left: 50px;
+}
+
+table .level3 td:first-child {
+    padding-left: 70px;
+}
+
+table .level4 td:first-child {
+    padding-left: 28px;
+}

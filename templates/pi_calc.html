@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Planetary Interaction Calculator{% endblock %}
+{% block ng_app_name %}pi_calc{% endblock %}
+{% block head %}
+  {% include 'javascripts_libs.html' %}
+  {% include 'styles_pi_calc.html' %}
+{% endblock %}
+
+{% block body %}
+  <body ng-controller="PlanetaryCalculator">
+  <div id="menu" class="container">
+    <div class="col-md-4">
+      <select ng-model="schemaId" id="schemasSelect">
+        <option value="undefined" selected="selected">Select a commodity</option>
+
+        {% for group in planetCommodsGroups %}
+          <optgroup label="{{ group.groupName }}">
+
+            {% for type in group.types_with_schemaId %}
+              <option value="{{ type.schemaId }}">{{ type.typeName }}</option>
+            {% endfor %}
+
+          </optgroup>
+        {% endfor %}
+
+      </select>
+      <button type="button" id="add-button" ng-click="addSchema()">Add</button>
+    </div>
+    <div class="col-md-4">
+      <div>
+        <label>Trade hub: </label>
+        <select ng-model="tradeHubId" id="tradeHubsSelect">
+          <option value="30000142" selected="selected">Jita</option>
+          <option value="30002187">Amarr</option>
+          <option value="30002659">Dodixie</option>
+          <option value="30002510">Rens</option>
+          <option value="30002053">Hek</option>
+        </select>
+        <button ng-click="reloadAllPrices()">Reload prices</button>
+      </div>
+      <div>
+        <label>Order type for buying: </label>
+        <span>Buy</span>
+        <input type="radio" ng-model="buyingOrderType" value="true"/>
+        <span>Sell</span>
+        <input type="radio" ng-model="buyingOrderType" value="false">
+      </div>
+      <div>
+        <label>Order type for selling: </label>
+        <span>Buy: </span>
+        <input type="radio" ng-model="sellingOrderType" value="true"/>
+        <span>Sell: </span>
+        <input type="radio" ng-model="sellingOrderType" value="false">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label>POCO tax: </label>
+      <input type="text" ng-model="poco_tax"/>
+    </div>
+  </div>
+
+  <script type="text/ng-template" id="/templates/tabletreenode.html">
+      <td>
+        <input type="checkbox" ng-model="inputTypeMap.type.isForSell" ng-change="fetchSubScheme(inputTypeMap)"/>
+        {[{ inputTypeMap['type']['typeName'] }]}
+      </td>
+      <td>{[{ inputTypeMap['quantity'] }]}</td>
+      <td>{[{ getTotalVolume(inputTypeMap) }]}</td>
+      <td><input type="text" ng-model="inputTypeMap['type']['pricing']['current']"></td>
+      <td><span>{[{ getTotalCost(inputTypeMap) }]}</span></td>
+      <td><span>{[{ getTotalInputCost(inputTypeMap.type.schema) }]}</span></td>
+  </script>
+
+  <div class="calcTablesCont">
+    <table class="schemaTable table table-condensed" ng-repeat="schema in schemas">
+      <thead>
+        <tr>
+          <th>Schematic name</th>
+          <th>Quantity</th>
+          <th>Volume</th>
+          <th>One unit cost</th>
+          <th>Total cost</th>
+          <th>Input cost
+            <button ng-click="removeSchema(schema)"><b>X</b></button> {# кнопка удаления #}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {# отдельная строка для нулевого уровня #}
+        <tr level="0">
+          <td>{[{ schema['outputType']['type']['typeName'] }]}</td>
+          <td>{[{ schema['outputType']['quantity'] }]}</td>
+          <td>{[{ getTotalVolume(schema['outputType']) }]}</td>
+          <td><input type="text" ng-model="schema['outputType']['type']['pricing']['current']"/></td>
+          <td><span>{[{ getTotalCost(schema['outputType']) }]}</span></td>
+          <td><span>{[{ getTotalInputCost(schema) }]}</span></td>
+        </tr>
+
+        {# вход #}
+        <tr ng-repeat="inputTypeMap in schema['inputTypes']" type-map="inputTypeMap" level="1" table-tree-node>
+          {# /templates/tabletreenode.html #}
+        </tr>
+      </tbody>
+
+      <thead>
+        <tr>
+          <th>Profit per run</th>
+          <th>Number of production lines</th>
+          <th>Runs per day</th>
+          <th>Profit per hour</th>
+          <th>Profit per day</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{[{ getOneRunProfit(schema) }]}</td>
+        <td><input type="text" ng-model="schema.prodLinesNumber"/></td>
+        <td>{[{ 24 * schema['prodLinesNumber'] }]}</td>
+        <td>{[{ getHourlyProfit(schema) }]}</td>
+        <td>{[{ getDaylyProfit(schema) }]}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  {% include 'javascripts_pi_calc.html' %}
+
+  </body>
+{% endblock %}

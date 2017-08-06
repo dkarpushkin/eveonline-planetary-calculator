@@ -1,0 +1,18 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" ng-app="{% block ng_app_name %}{% endblock %}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'libs/bootstrap/dist/css/bootstrap.css' %}"/>
+  <link rel="stylesheet" href="{% static 'libs/bootstrap/dist/css/bootstrap-theme.css' %}"/>
+
+  {% block head %}{% endblock %}
+</head>
+{% block body %}
+{% endblock %}
+</html>

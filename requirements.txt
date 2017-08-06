@@ -1,0 +1,3 @@
+django
+django-rest-framework
+dj_database_url

@@ -1,0 +1,7 @@
+*.log
+/.idea
+/.vagrant
+/Stuff
+/.bowerrc
+__pycache__
+*.pyc

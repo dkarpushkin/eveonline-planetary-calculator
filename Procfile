@@ -1,0 +1,1 @@
+web: gunicorn sr_secretary.wsgi --log-file -
