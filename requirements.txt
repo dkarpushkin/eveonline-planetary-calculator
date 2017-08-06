@@ -1,3 +1,5 @@
+psycopg2
 django
 django-rest-framework
+whitenoise
 dj_database_url
