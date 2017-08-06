@@ -96,37 +96,6 @@ class InvType(models.Model):
     def __str__(self):
         return self.typeName
 
-    def getdict(self, **kwargs):
-        result = dict(
-            typeId=self.typeID,
-            groupId=self.groupID,
-            name=self.typeName,
-            description=self.description,
-            mass=self.mass,
-            volume=self.volume,
-            capasity=self.capacity,
-            portionSize=self.portionSize,
-            raceid=self.raceid,
-            baseprice=self.baseprice,
-            published=self.published,
-            marketGroup=self.marketGroup.getdict(),
-            iconId=self.iconid,
-            soundId=self.soundid,
-        )
-
-        if self.planetarySchematicMap.count() > 0:
-            isextended = kwargs.get('extended_schematics', True)
-            outputSchemas = self.planetarySchematicMap.filter(isinput=0)
-            if outputSchemas.count() > 0:
-                result['outputSchematics'] = outputSchemas[0].schematic.getdict(extended_inputs=True) if isextended else outputSchemas[0].schematic.schematicID
-
-            inputSchemas = self.planetarySchematicMap.filter(isinput=1)
-            if inputSchemas.count() > 0:
-                result['inputSchematics'] = [schema.schematic.getdict() if isextended else schema.schematic.schematicID
-                                             for schema in inputSchemas]
-
-        return result
-
     def get_producing_pi_schematics(self):
         # schMap = self.piSchematicMaps.filter(isinput=False)
         sch_map = self.piSchematics.filter(types__piSchematicMaps__isinput=False)
