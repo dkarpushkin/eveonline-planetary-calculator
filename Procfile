@@ -1,1 +1,1 @@
-web: gunicorn sr_secretary.wsgi --log-file -
+web: gunicorn PlanetaryCalculator.wsgi --log-file -
